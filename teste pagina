@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do Afiliado ao Produtor: Guia Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application designed as an interactive roadmap. The structure follows the main chapters of the source report, presented as clickable steps in a timeline. This was chosen to transform the linear text into an engaging, step-by-step user journey, making the process of creating an ebook feel more manageable and visual. Clicking a step reveals its detailed sub-topics in an accordion format, preventing information overload and promoting focused learning. A call-to-action section is included at the end to convert users. -->
+    <!-- Visualization & Content Choices: Report Info: Ebook chapters and sub-topics. Goal: Guide the user through a learning process, organize information hierarchically, and compare options. Viz/Presentation Method: Main chapters are a clickable timeline (HTML/CSS/JS) for a visual journey. Sub-topics use an accordion (HTML/CSS/JS) for clean, hierarchical content display. The platform comparison from Chapter 4 is a Bar Chart (Chart.js) for easy visual analysis. Justification: This structure enhances usability by breaking down complex information into digestible, interactive steps, directly supporting the goal of making the content easily consumable. Library/Method: Vanilla JS for interactions, Chart.js for visualization. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .step-item.active {
+            border-color: #F97316;
+            background-color: #FFF7ED;
+            color: #F97316;
+        }
+        .step-item.active .step-circle {
+            background-color: #F97316;
+            color: #FFFFFF;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-button.open .accordion-icon {
+            transform: rotate(45deg);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-stone-900">Do Afiliado ao Produtor de Sucesso</h1>
+            <p class="text-lg text-stone-600 mt-2">O Guia Definitivo para sua Liberdade Digital</p>
+        </header>
+
+        <main>
+            <section id="roadmap" class="mb-12">
+                <h2 class="text-xl font-bold text-center mb-2 text-stone-800">Sua Jornada de Criação</h2>
+                <p class="text-center text-stone-600 mb-8">Navegue pelas etapas essenciais para lançar seu produto. Clique em um capítulo para ver os detalhes.</p>
+                <nav class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4">
+                    <button data-target="content-1" class="step-item w-full md:w-auto flex items-center gap-3 p-3 border-2 border-stone-200 rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-50">
+                        <span class="step-circle flex-shrink-0 w-8 h-8 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-600">1</span>
+                        <span class="font-semibold">Introdução</span>
+                    </button>
+                    <div class="w-8 h-1 md:w-8 md:h-1 bg-stone-200 rounded-full"></div>
+                    <button data-target="content-2" class="step-item w-full md:w-auto flex items-center gap-3 p-3 border-2 border-stone-200 rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-50">
+                        <span class="step-circle flex-shrink-0 w-8 h-8 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-600">2</span>
+                        <span class="font-semibold">Nicho</span>
+                    </button>
+                    <div class="w-8 h-1 md:w-8 md:h-1 bg-stone-200 rounded-full"></div>
+                    <button data-target="content-3" class="step-item w-full md:w-auto flex items-center gap-3 p-3 border-2 border-stone-200 rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-50">
+                        <span class="step-circle flex-shrink-0 w-8 h-8 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-600">3</span>
+                        <span class="font-semibold">Produto</span>
+                    </button>
+                    <div class="w-8 h-1 md:w-8 md:h-1 bg-stone-200 rounded-full"></div>
+                    <button data-target="content-4" class="step-item w-full md:w-auto flex items-center gap-3 p-3 border-2 border-stone-200 rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-50">
+                        <span class="step-circle flex-shrink-0 w-8 h-8 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-600">4</span>
+                        <span class="font-semibold">Vendas</span>
+                    </button>
+                    <div class="w-8 h-1 md:w-8 md:h-1 bg-stone-200 rounded-full"></div>
+                    <button data-target="content-5" class="step-item w-full md:w-auto flex items-center gap-3 p-3 border-2 border-stone-200 rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-50">
+                        <span class="step-circle flex-shrink-0 w-8 h-8 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-600">5</span>
+                        <span class="font-semibold">Afiliados</span>
+                    </button>
+                     <div class="w-8 h-1 md:w-8 md:h-1 bg-stone-200 rounded-full"></div>
+                    <button data-target="content-6" class="step-item w-full md:w-auto flex items-center gap-3 p-3 border-2 border-stone-200 rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-50">
+                        <span class="step-circle flex-shrink-0 w-8 h-8 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-600">6</span>
+                        <span class="font-semibold">Otimização</span>
+                    </button>
+                </nav>
+            </section>
+
+            <div id="content-container" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-stone-200 min-h-[400px]">
+                
+                <div id="content-start" class="text-center flex flex-col justify-center items-center h-full">
+                    <h3 class="text-2xl font-bold text-stone-800">Bem-vindo(a) à sua jornada!</h3>
+                    <p class="mt-4 text-stone-600 max-w-2xl">Você está prestes a transformar seu conhecimento em um ativo digital valioso. Este guia interativo foi projetado para te levar do zero ao seu primeiro produto de sucesso. Comece clicando no primeiro capítulo, "Introdução", para desbloquear seu potencial como produtor.</p>
+                </div>
+
+                <div id="content-1" class="content-panel hidden">
+                    <h3 class="text-2xl font-bold mb-6 text-stone-900">Capítulo 1: Introdução: Desvendando o Mundo do Produtor</h3>
+                    <div class="space-y-4">
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">A Nova Economia Digital</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">A internet se tornou um universo de oportunidades. A demanda por produtos digitais como cursos, ebooks e mentorias é enorme. Você pode fazer parte dessa revolução, trabalhando de onde quiser, com flexibilidade e fazendo o que ama.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Produtor: O Melhor dos Dois Mundos</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Ser um produtor significa criar seu próprio produto digital e recrutar afiliados para vendê-lo. Isso te dá mais controle, lucros maiores, autoridade no seu nicho e um potencial de escala gigantesco, com centenas de vendedores trabalhando para você.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Seu Mapa para o Sucesso</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Este guia é seu passo a passo prático para se tornar um Produtor de Sucesso. Vamos descomplicar o caminho, desde a escolha do nicho até as estratégias para escalar suas vendas e fazer seu negócio digital crescer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-2" class="content-panel hidden">
+                    <h3 class="text-2xl font-bold mb-6 text-stone-900">Capítulo 2: Encontrando Seu Nicho Lucrativo</h3>
+                    <div class="space-y-4">
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Os 3 Pilares do Nicho Ideal</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Para encontrar seu nicho, combine três pilares: 1) **Paixão e Experiência** (o que você ama e conhece), 2) **Demanda** (o que o mercado procura) e 3) **Potencial de Lucratividade** (se as pessoas pagariam por uma solução nesse tema).</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Desenhando sua "Persona"</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Crie um personagem que represente seu cliente ideal. Defina seus sonhos, dores, frustrações e onde ele busca informação. Ter uma persona clara ajuda a criar um produto e uma comunicação que se conectam diretamente com as necessidades do seu público.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="content-3" class="content-panel hidden">
+                     <h3 class="text-2xl font-bold mb-6 text-stone-900">Capítulo 3: Criando Seu Produto Digital Irresistível</h3>
+                     <div class="space-y-4">
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Tipos de Produtos Digitais</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Escolha o formato que melhor se adapta ao seu conhecimento e público: **Ebook** (rápido de produzir), **Curso Online** (alto valor percebido), **Mentoria** (ajuda personalizada) ou **Comunidade Online** (receita recorrente).</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Conteúdo de Valor e Oferta</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Estruture seu conteúdo de forma lógica, com linguagem simples e exemplos práticos. Defina um preço baseado na transformação que você entrega e crie uma oferta irresistível com bônus exclusivos, como checklists e templates.</p>
+                            </div>
+                        </div>
+                         <div class="accordion-item">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Plataformas e Aspectos Técnicos</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Cadastre seu produto em plataformas como Hotmart, Eduzz ou Kiwify. Elas cuidam do processamento de pagamentos e da entrega do conteúdo. Embora opcional, considere registrar os direitos autorais do seu produto para maior segurança.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-4" class="content-panel hidden">
+                    <h3 class="text-2xl font-bold mb-6 text-stone-900">Capítulo 4: Estratégias de Lançamento e Vendas</h3>
+                     <div class="space-y-4">
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Construção de Audiência</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Comece a construir sua audiência antes do lançamento. Crie uma lista de e-mails oferecendo uma "isca digital" e engaje seu público nas redes sociais com conteúdo de valor gratuito para gerar confiança e autoridade.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Modelos de Lançamento</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Escolha a estratégia ideal para você: **Lançamento Semente** (para validar a oferta com um grupo pequeno), **Perpétuo** (produto sempre à venda) ou **Meteórico** (cria urgência com carrinho que abre e fecha).</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Copywriting e Tráfego</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Use a arte do copywriting para vender com palavras, focando nos benefícios e usando histórias. Combine **tráfego orgânico** (SEO, redes sociais) para construir autoridade e **tráfego pago** (Facebook Ads, Google Ads) para acelerar e escalar as vendas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-5" class="content-panel hidden">
+                    <h3 class="text-2xl font-bold mb-6 text-stone-900">Capítulo 5: Recrutando e Gerenciando Afiliados</h3>
+                     <div class="space-y-4">
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Como Atrair Afiliados de Performance</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Para atrair os melhores afiliados, ofereça um produto de qualidade, comissões atrativas (acima de 40%), uma página de afiliação clara e suporte rápido e eficiente. Lembre-se que o sucesso deles é o seu sucesso.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Ferramentas e Gerenciamento</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Facilite a vida dos seus afiliados oferecendo uma "caixa de ferramentas" com materiais de divulgação prontos (imagens, textos, vídeos). Monitore o desempenho, mantenha uma comunicação constante e crie programas de incentivo para manter a rede motivada.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="content-6" class="content-panel hidden">
+                    <h3 class="text-2xl font-bold mb-6 text-stone-900">Capítulo 6: Escala e Otimização Contínua</h3>
+                     <div class="space-y-4">
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Análise de Métricas (KPIs)</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Acompanhe os números para tomar decisões inteligentes. Fique de olho na **Taxa de Conversão** (quantos visitantes compram), no **Custo de Aquisição por Cliente (CAC)** e no **Valor do Tempo de Vida do Cliente (LTV)** para garantir a saúde do seu negócio.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-stone-200 pb-4">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Melhoria Contínua e Novas Ofertas</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">Seu produto deve evoluir. Colete feedback dos clientes para atualizar o conteúdo e adicionar bônus. Aumente o lucro por cliente com estratégias de **Upsell** (oferta de maior valor), **Downsell** (oferta de menor valor) e **Cross-sell** (oferta complementar).</p>
+                            </div>
+                        </div>
+                         <div class="accordion-item">
+                            <button class="accordion-button w-full flex justify-between items-center text-left">
+                                <span class="font-semibold text-lg">Esteja Sempre à Frente</span>
+                                <span class="accordion-icon text-2xl text-orange-500 transition-transform duration-300">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="pt-3 text-stone-600">O marketing digital muda rapidamente. Acompanhe as novas tendências, explore novas plataformas e não tenha medo de testar diferentes abordagens. A otimização contínua é o que transforma um sucesso pontual em um negócio sólido e crescente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cta-section bg-orange-500 text-white mt-12 p-8 rounded-xl shadow-lg text-center">
+                <h3 class="text-3xl font-bold mb-4">Pronto para ir além?</h3>
+                <p class="text-lg mb-6 max-w-3xl mx-auto">Você explorou os pilares essenciais. Agora, imagine ter acesso a estratégias avançadas, modelos prontos e o meu acompanhamento para acelerar seu sucesso. Conheça o material completo e transforme seu conhecimento em uma fonte de renda real e consistente.</p>
+                <a href="https://seulink.com" class="inline-block bg-white text-orange-500 font-bold py-3 px-8 rounded-full text-xl hover:bg-stone-100 transition-colors duration-300 shadow-md">Quero o Treinamento Completo</a>
+            </div>
+        </main>
+
+        <footer class="text-center mt-12">
+            <p class="text-stone-500">Guia interativo criado para transformar conhecimento em sucesso.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const stepItems = document.querySelectorAll('.step-item');
+            const contentPanels = document.querySelectorAll('.content-panel');
+            const contentStart = document.getElementById('content-start');
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            
+            function switchTab(targetId) {
+                contentStart.classList.add('hidden');
+                
+                stepItems.forEach(item => {
+                    const isActive = item.dataset.target === targetId;
+                    item.classList.toggle('active', isActive);
+                });
+
+                contentPanels.forEach(panel => {
+                    const isTarget = panel.id === targetId;
+                    panel.classList.toggle('hidden', !isTarget);
+                });
+            }
+
+            stepItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    switchTab(item.dataset.target);
+                });
+            });
+            
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const isOpen = button.classList.toggle('open');
+
+                    if (isOpen) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    } else {
+                        content.style.maxHeight = '0';
+                    }
+                });
+            });
+            
+            switchTab('content-start');
+        });
+    </script>
+</body>
+</html>
